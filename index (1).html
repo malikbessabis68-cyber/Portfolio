@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Malik Bessabis — Portfolio Data Science</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07111f;
+      --bg-soft: #0c1728;
+      --surface: rgba(15, 24, 41, 0.72);
+      --surface-strong: #0f1b2d;
+      --card: rgba(18, 30, 50, 0.76);
+      --card-hover: rgba(24, 38, 63, 0.92);
+      --border: rgba(148, 163, 184, 0.14);
+      --border-strong: rgba(96, 165, 250, 0.28);
+      --text: #dbe7f7;
+      --muted: #8fa6c2;
+      --white: #f8fbff;
+      --accent: #60a5fa;
+      --accent-2: #22d3ee;
+      --accent-3: #34d399;
+      --danger: #fb7185;
+      --shadow: 0 20px 70px rgba(3, 10, 23, 0.45);
+      --radius: 24px;
+      --radius-sm: 16px;
+      --mono: 'JetBrains Mono', monospace;
+      --sans: 'Inter', sans-serif;
+      --container: 1180px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--sans);
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,.16), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(34,211,238,.10), transparent 24%),
+        radial-gradient(circle at 20% 85%, rgba(52,211,153,.08), transparent 26%),
+        linear-gradient(180deg, #06101d 0%, #091321 40%, #07111f 100%);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(148,163,184,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148,163,184,.045) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+      z-index: 0;
+      mask-image: linear-gradient(to bottom, rgba(0,0,0,.8), transparent 88%);
+    }
+
+    a { color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    .container {
+      width: min(var(--container), calc(100% - 2rem));
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .glass {
+      background: var(--surface);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+    }
+
+    .section {
+      padding: 6rem 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: .7rem;
+      font-family: var(--mono);
+      font-size: .74rem;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      color: var(--accent-2);
+      margin-bottom: 1rem;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 18px rgba(34, 211, 238, .45);
+    }
+
+    h1, h2, h3 {
+      color: var(--white);
+      letter-spacing: -.04em;
+    }
+
+    h1 {
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      line-height: .95;
+      font-weight: 800;
+      letter-spacing: -.05em;
+    }
+
+    h2 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1;
+      font-weight: 800;
+    }
+
+    h2 span, h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    p.lead {
+      font-size: 1.02rem;
+      line-height: 1.8;
+      max-width: 62ch;
+      color: var(--muted);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(34px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 1rem;
+      z-index: 100;
+      width: min(var(--container), calc(100% - 2rem));
+      margin: 1rem auto 0;
+      padding: 1.2rem 1.8rem;
+      border-radius: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: rgba(7, 17, 31, 0.72);
+      backdrop-filter: blur(14px);
+      border: 1px solid rgba(148, 163, 184, .14);
+      box-shadow: 0 12px 40px rgba(2, 8, 23, .28);
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      font-weight: 700;
+      color: var(--white);
+      font-size: 1.2rem;
+    }
+
+    .nav-badge {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 14px;
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--white);
+      background: linear-gradient(135deg, rgba(96,165,250,.95), rgba(34,211,238,.82));
+      box-shadow: 0 14px 30px rgba(34, 211, 238, .18);
+    }
+
+    .nav-brand small {
+      display: block;
+      margin-top: .25rem;
+      font-family: var(--mono);
+      font-size: .85rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 1.05rem;
+      padding: 1rem 1.3rem;
+      border-radius: 999px;
+      transition: .25s ease;
+      padding: .9rem 1.1rem;
+      border-radius: 999px;
+      transition: .25s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--white);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* HERO */
+    #hero {
+      min-height: calc(100vh - 110px);
+      display: flex;
+      align-items: center;
+      padding: 4.5rem 0 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(280px, .55fr);
+      gap: 2.2rem;
+      align-items: center;
+    }
+
+    .hero-main {
+      padding: 4.2rem 4rem;
+      border-radius: 34px;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at top left, rgba(96,165,250,.10), transparent 28%),
+        linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.015));
+    }
+
+    .hero-main::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,.03), transparent 38%, transparent 68%, rgba(34,211,238,.03));
+      pointer-events: none;
+    }
+
+    .hero-topline {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: .45rem;
+      margin-bottom: 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-kicker {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--muted);
+      letter-spacing: .03em;
+    }
+
+    .hero-status {
+      font-family: var(--mono);
+      font-size: .8rem;
+      color: var(--muted);
+    }
+
+    .hero-heading {
+      position: relative;
+      z-index: 1;
+      max-width: 720px;
+    }
+
+    .hero-heading h1 {
+      margin-bottom: 1.4rem;
+      line-height: .9;
+    }
+
+    .hero-heading p {
+      max-width: 34ch;
+      color: var(--text);
+      font-size: 1.08rem;
+      line-height: 1.65;
+    }
+
+    .hero-side {
+      display: grid;
+      gap: 1rem;
+      align-self: stretch;
+    }
+
+    .hero-side-card {
+      border-radius: 20px;
+      padding: 1rem;
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(148,163,184,.08);
+    }
+
+    .hero-side-card h3 {
+      font-size: .95rem;
+      margin-bottom: .6rem;
+    }
+
+    .mini-label {
+      font-family: var(--mono);
+      font-size: .62rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+      margin-bottom: .6rem;
+    }
+
+    .chip-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .6rem;
+    }
+
+    .chip {
+      padding: .4rem .6rem;
+      border-radius: 999px;
+      font-size: .7rem;
+      font-family: var(--mono);
+      color: var(--text);
+      border: 1px solid rgba(148,163,184,.12);
+      background: rgba(255,255,255,.025);
+    }
+
+    .hero-actions {
+      display: grid;
+      gap: .9rem;
+    }
+
+    .hero-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(148,163,184,.10);
+      text-decoration: none;
+      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+    }
+
+    .hero-action:hover {
+      transform: translateY(-2px);
+      border-color: rgba(96,165,250,.26);
+      background: rgba(255,255,255,.035);
+    }
+
+    .hero-action-copy {
+      display: grid;
+      gap: .25rem;
+    }
+
+    .hero-action-label {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .hero-action-value {
+      color: var(--white);
+      font-size: .98rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .hero-action-icon {
+      color: var(--accent-2);
+      font-family: var(--mono);
+      font-size: .95rem;
+    }
+
+    /* PROJECTS */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      padding: 1.8rem;
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, border-color .25s ease, background .25s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(96,165,250,.24);
+      background: var(--card-hover);
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+      opacity: .9;
+    }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .project-num {
+      font-family: var(--mono);
+      font-size: .72rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+    }
+
+    .project-hours {
+      font-family: var(--mono);
+      font-size: .72rem;
+      color: var(--muted);
+    }
+
+    .project-title {
+      font-size: 1.45rem;
+      line-height: 1.15;
+      margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: .98rem;
+      line-height: 1.8;
+      margin-bottom: 1.2rem;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .55rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .tag {
+      padding: .5rem .75rem;
+      border-radius: 999px;
+      font-family: var(--mono);
+      font-size: .7rem;
+      letter-spacing: .04em;
+      border: 1px solid rgba(148,163,184,.14);
+      color: var(--text);
+      background: rgba(255,255,255,.03);
+    }
+
+    .project-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .project-block {
+      padding: 1rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,.025);
+      border: 1px solid rgba(148,163,184,.10);
+    }
+
+    .project-block h4 {
+      font-size: .78rem;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      font-family: var(--mono);
+      color: var(--accent-2);
+      margin-bottom: .8rem;
+    }
+
+    .project-block ul {
+      list-style: none;
+      display: grid;
+      gap: .65rem;
+    }
+
+    .project-block li {
+      position: relative;
+      padding-left: 1rem;
+      font-size: .9rem;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    .project-block li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+    }
+
+    .project-footer {
+      margin-top: 1.4rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(148,163,184,.10);
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      color: var(--muted);
+      font-size: .84rem;
+    }
+
+    /* SKILLS */
+    #competences {
+      position: relative;
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 1.5rem;
+    }
+
+    .skills-card,
+    .soft-card {
+      padding: 1.8rem;
+      border-radius: 28px;
+    }
+
+    .card-title {
+      font-size: 1.05rem;
+      margin-bottom: 1.3rem;
+    }
+
+    .skill-item { margin-bottom: 1.2rem; }
+
+    .skill-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: .55rem;
+      font-size: 1.22rem;
+      color: var(--accent-2);
+      font-weight: 600;
+    }
+
+    .skill-head span:last-child {
+      font-family: var(--mono);
+      color: var(--muted);
+      font-size: .78rem;
+    }
+
+    .skill-track {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(148,163,184,.10);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .skill-fill {
+      height: 100%;
+      width: 0;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      transition: width 1.2s cubic-bezier(.16,1,.3,1);
+    }
+
+    .soft-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: .9rem;
+    }
+
+    .soft-item {
+      padding: 1rem;
+      border-radius: 18px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid rgba(148,163,184,.10);
+    }
+
+    .soft-item strong {
+      display: block;
+      color: var(--white);
+      margin-bottom: .45rem;
+      font-size: .95rem;
+    }
+
+    .soft-item p {
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: .9rem;
+    }
+
+    /* BILAN */
+    .bilan-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.5rem;
+    }
+
+    .bilan-card {
+      padding: 1.8rem;
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .bilan-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 5px;
+      border-radius: 999px;
+    }
+
+    .bilan-card.positive::before { background: linear-gradient(180deg, var(--accent), var(--accent-3)); }
+    .bilan-card.improve::before { background: linear-gradient(180deg, var(--danger), #f59e0b); }
+
+    .bilan-project {
+      font-family: var(--mono);
+      font-size: .72rem;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--muted);
+      margin-bottom: .8rem;
+    }
+
+    .bilan-heading {
+      font-size: 1.1rem;
+      margin-bottom: .85rem;
+    }
+
+    .bilan-card p {
+      color: var(--muted);
+      font-size: .95rem;
+      line-height: 1.8;
+    }
+
+    /* CONTACT */
+    #contact .contact-wrap {
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 1.5rem;
+    }
+
+    .contact-info,
+    .contact-form-wrap {
+      padding: 2rem;
+      border-radius: 30px;
+    }
+
+    .contact-info p {
+      color: var(--muted);
+      line-height: 1.8;
+      margin: 1rem 0 1.5rem;
+    }
+
+    .info-list {
+      display: grid;
+      gap: .9rem;
+      margin-top: 1.5rem;
+    }
+
+    .info-action {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.1rem;
+      border-radius: 16px;
+      background: rgba(255,255,255,.02);
+      border: 1px solid rgba(148,163,184,.10);
+      text-decoration: none;
+      transition: transform .22s ease, border-color .22s ease, background .22s ease;
+    }
+
+    .info-action:hover {
+      transform: translateY(-2px);
+      border-color: rgba(96,165,250,.26);
+      background: rgba(255,255,255,.035);
+    }
+
+    .info-action-copy {
+      display: grid;
+      gap: .25rem;
+    }
+
+    .info-action-label {
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: .68rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .info-action-value {
+      color: var(--white);
+      font-size: .98rem;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+
+    .info-action-icon {
+      color: var(--accent-2);
+      font-family: var(--mono);
+      font-size: .95rem;
+    }
+
+    .contact-form {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .form-group {
+      display: grid;
+      gap: .5rem;
+    }
+
+    .form-label {
+      font-size: .75rem;
+      color: var(--muted);
+      font-family: var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .13em;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      border: 1px solid rgba(148,163,184,.14);
+      background: rgba(255,255,255,.03);
+      color: var(--text);
+      border-radius: 16px;
+      padding: 1rem 1rem;
+      outline: none;
+      font: inherit;
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: #6f86a4;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      border-color: rgba(96,165,250,.45);
+      box-shadow: 0 0 0 4px rgba(96,165,250,.12);
+      background: rgba(255,255,255,.045);
+    }
+
+    .form-textarea {
+      min-height: 160px;
+      resize: vertical;
+    }
+
+    .form-submit {
+      justify-self: start;
+      cursor: pointer;
+    }
+
+    .form-success {
+      display: none;
+      padding: 1rem 1.2rem;
+      border-radius: 16px;
+      background: rgba(52,211,153,.10);
+      border: 1px solid rgba(52,211,153,.25);
+      color: #c7f9e8;
+      font-weight: 500;
+    }
+
+    footer {
+      padding: 2rem 0 3rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: .82rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-layout,
+      .skills-grid,
+      #contact .contact-wrap,
+      .projects-grid,
+      .bilan-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-main {
+        padding: 3rem 2.5rem;
+      }
+      .project-panels {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      nav {
+        top: .75rem;
+        border-radius: 18px;
+        padding: .9rem 1rem;
+      }
+
+      .nav-links { display: none; }
+
+      #hero {
+        min-height: auto;
+        padding-top: 2rem;
+      }
+
+      .hero-main,
+      .hero-side,
+      .hero-panel,
+      .skills-card,
+      .soft-card,
+      .project-card,
+      .bilan-card,
+      .contact-info,
+      .contact-form-wrap {
+        padding: 1.35rem;
+        border-radius: 24px;
+      }
+
+      .hero-metrics,
+      .form-row,
+      .soft-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 4.5rem 0;
+      }
+
+      .section-head {
+        display: block;
+      }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-brand">
+      <img src="./img/06.png" alt="Malik Bessabis" style="width:68px;height:68px;border-radius:50%;object-fit:cover;box-shadow:0 0 18px rgba(96,165,250,.75),0 0 32px rgba(34,211,238,.4);border:2px solid rgba(255,255,255,.2);" />
+      <div>
+        Malik Bessabis
+        <small>Portfolio · Data Science</small>
+      </div>
+    </div>
+    <div class="nav-links">
+      <a href="#projets">Projets</a>
+      <a href="#competences">Compétences</a>
+      <a href="#bilan">Bilan</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="container">
+      <div class="hero-layout">
+        <div class="hero-main glass reveal">
+          <div class="hero-topline">
+            <div class="hero-kicker">Data Science · 2025–2026</div>
+            <div class="hero-status">Portfolio étudiant</div>
+          </div>
+
+          <div class="hero-heading">
+            <h1>Malik Bessabis<br><span>Data Scientist</span></h1>
+            <p>
+              Étudiant en data science, je conçois des projets autour de la donnée, de l’automatisation et de la conformité réglementaire. J’aime structurer l’information, fiabiliser les traitements et produire des résultats exploitables.
+            </p>
+          </div>
+        </div>
+
+        <aside class="hero-side reveal" style="transition-delay:.12s">
+          <div class="hero-side-card glass">
+            <div class="mini-label">Expertises</div>
+            <div class="chip-list">
+              <span class="chip">Python</span>
+              <span class="chip">pandas</span>
+              <span class="chip">Jupyter</span>
+              <span class="chip">RGPD</span>
+              <span class="chip">Nettoyage de données</span>
+              <span class="chip">Analyse de risques</span>
+            </div>
+          </div>
+
+          <div class="hero-side-card glass">
+            <div class="mini-label">Orientation</div>
+            <h3>Profil analytique et rigoureux</h3>
+            <p class="lead" style="font-size:.94rem; max-width:none; margin-top:.4rem;">
+              Je travaille sur des cas concrets mêlant qualité des données, automatisation des traitements et enjeux réglementaires.
+            </p>
+          </div>
+
+          </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="projets" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          
+          <h2>Mes <span>projets</span></h2>
+        </div>
+        <p class="lead">Deux projets académiques complémentaires, entre traitement de données à grande échelle et analyse juridique appliquée à la protection des données personnelles.</p>
+      </div>
+
+      <div class="projects-grid">
+        <article class="project-card glass reveal">
+          <div class="project-top">
+            <div class="project-num">SAE 01 / 02</div>
+            
+          </div>
+          <h3 class="project-title">Digitalisation des Commerces Parisiens</h3>
+          <p class="project-desc">
+            Automatisation de la collecte, du nettoyage et de l'enrichissement d'une base de données de commerces parisiens avec coordonnées GPS, présence web et informations liées aux services numériques.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">pandas</span>
+            <span class="tag">Web scraping</span>
+            <span class="tag">Géolocalisation</span>
+            <span class="tag">Jupyter Notebook</span>
+          </div>
+          <div class="project-panels">
+            <div class="project-block">
+              <h4>Objectifs</h4>
+              <ul>
+                <li>Manipuler une base volumineuse</li>
+                <li>Nettoyer des données hétérogènes</li>
+                <li>Ajouter des variables numériques utiles</li>
+                <li>Automatiser le traitement avec Python</li>
+              </ul>
+            </div>
+            <div class="project-block">
+              <h4>Livrables</h4>
+              <ul>
+                <li>Notebook Jupyter structuré</li>
+                <li>Base enrichie et exploitable</li>
+                <li>Rapport méthodologique complet</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span>Équipe : Thomas Aymard, Mancef Heniche, Yussuf Aslan</span>
+          </div>
+        </article>
+
+        <article class="project-card glass reveal" style="transition-delay:.12s">
+          <div class="project-top">
+            <div class="project-num">SAE 02 / 02</div>
+            
+          </div>
+          <h3 class="project-title">Conformité Réglementaire — Données Personnelles</h3>
+          <p class="project-desc">
+            Étude d'un traitement de données personnelles afin d'identifier les non-conformités RGPD, les risques associés et les mesures correctives à mettre en place dans un cadre juridique structuré.
+          </p>
+          <div class="project-tags">
+            <span class="tag">RGPD</span>
+            <span class="tag">Droit des données</span>
+            <span class="tag">Analyse de risques</span>
+            <span class="tag">Recommandations</span>
+          </div>
+          <div class="project-panels">
+            <div class="project-block">
+              <h4>Objectifs</h4>
+              <ul>
+                <li>Comprendre les principes du RGPD</li>
+                <li>Identifier les données personnelles sensibles</li>
+                <li>Évaluer une conformité organisationnelle</li>
+                <li>Construire une analyse juridique rigoureuse</li>
+              </ul>
+            </div>
+            <div class="project-block">
+              <h4>Livrables</h4>
+              <ul>
+                <li>Analyse écrite de conformité</li>
+                <li>Cartographie des risques juridiques</li>
+                <li>Mesures correctives argumentées</li>
+              </ul>
+            </div>
+          </div>
+          <div class="project-footer">
+            <span>Équipe : Thomas Aymard, Mancef Heniche, Yussuf Aslan</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="competences" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          
+          <h2>Mes <span>compétences</span></h2>
+        </div>
+      </div>
+
+      <div class="skills-grid">
+        <div class="skills-card glass reveal">
+          <h3 class="card-title">Compétences techniques</h3>
+
+          <div class="skill-item">
+            <div class="skill-head"><span>Python & Jupyter Notebook</span></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-head"><span>pandas — Manipulation de DataFrames</span></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-head"><span>Nettoyage & structuration de données</span></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-head"><span>Géolocalisation (lat/lon)</span></div>
+          </div>
+          <div class="skill-item">
+            <div class="skill-head"><span>RGPD & conformité réglementaire</span></div>
+          </div>
+          <div class="skill-item" style="margin-bottom:0;">
+            <div class="skill-head"><span>Analyse de risques juridiques</span></div>
+          </div>
+        </div>
+
+        <div class="soft-card glass reveal" style="transition-delay:.1s">
+          <h3 class="card-title">Savoir-être</h3>
+          <div class="soft-grid">
+            <div class="soft-item">
+              <strong>Rigueur</strong>
+              <p>Vérification attentive des résultats et contrôle des incohérences.</p>
+            </div>
+            <div class="soft-item">
+              <strong>Collaboration</strong>
+              <p>Travail d'équipe fluide et organisation claire des tâches.</p>
+            </div>
+            <div class="soft-item">
+              <strong>Esprit critique</strong>
+              <p>Analyse des limites des données et recul méthodologique.</p>
+            </div>
+            <div class="soft-item">
+              <strong>Autonomie</strong>
+              <p>Recherche active de solutions et capacité d'adaptation.</p>
+            </div>
+            <div class="soft-item">
+              <strong>Méthode</strong>
+              <p>Démarche logique, structurée et reproductible.</p>
+            </div>
+            <div class="soft-item">
+              <strong>Responsabilité</strong>
+              <p>Sensibilité forte aux enjeux éthiques et à la protection des données.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bilan" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          
+          <h2>Bilan des <span>SAE</span></h2>
+        </div>
+      </div>
+
+      <div class="bilan-grid">
+        <div class="bilan-card glass positive reveal">
+          <div class="bilan-project">SAE 01 · Digitalisation</div>
+          <h3 class="bilan-heading">Points réussis</h3>
+          <p>Code clair, structuré et suffisamment robuste pour enrichir la base tout en réduisant les erreurs grâce à des tests effectués sur des échantillons représentatifs.</p>
+        </div>
+        <div class="bilan-card glass improve reveal" style="transition-delay:.08s">
+          <div class="bilan-project">SAE 01 · Digitalisation</div>
+          <h3 class="bilan-heading">À améliorer</h3>
+          <p>L'identification exacte des services de livraison reste partiellement limitée par les données manquantes. Une optimisation supplémentaire du code améliorerait les performances de traitement.</p>
+        </div>
+        <div class="bilan-card glass positive reveal" style="transition-delay:.12s">
+          <div class="bilan-project">SAE 02 · RGPD</div>
+          <h3 class="bilan-heading">Points réussis</h3>
+          <p>Analyse structurée mettant en évidence les non-conformités et formulant des recommandations cohérentes avec les exigences du cadre légal.</p>
+        </div>
+        <div class="bilan-card glass improve reveal" style="transition-delay:.16s">
+          <div class="bilan-project">SAE 02 · RGPD</div>
+          <h3 class="bilan-heading">À améliorer</h3>
+          <p>Certaines notions juridiques, comme les bases légales et les responsabilités précises des acteurs, demandent encore un approfondissement pour gagner en précision.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <div>
+          
+          <h2>Me <span>contacter</span></h2>
+        </div>
+      </div>
+
+      <div class="contact-wrap">
+        <div class="contact-info glass reveal">
+          <h3 style="font-size:1.4rem;">Construisons quelque chose d'utile avec la donnée</h3>
+          <p>
+            Je suis ouvert aux opportunités de stage, d'alternance et aux projets concrets autour de la data, de l'automatisation ou de la conformité. Remplissez le formulaire pour me présenter votre besoin.
+          </p>
+          <div class="info-list">
+            <a class="info-action" href="C:/Users/Malik/Desktop/IUT/Site Portfolio/CV.Malik Bessabis.pdf" download>
+              <div class="info-action-copy">
+                <span class="info-action-label">CV</span>
+                <span class="info-action-value">Télécharger mon PDF</span>
+              </div>
+              <span class="info-action-icon">↓</span>
+            </a>
+            <a class="info-action" href= "https://www.linkedin.com/in/malik-bessabis-a5ba90356/?lipi=urn%3Ali%3Apage%3Ad_flagship3_feed%3BD9EtdnfQSAugDJrCiA1j6w%3D%3D" target="_blank" rel="noopener noreferrer">
+              <div class="info-action-copy">
+                <span class="info-action-label">LinkedIn</span>
+                <span class="info-action-value">Voir mon profil</span>
+              </div>
+              <span class="info-action-icon">↗</span>
+            </a>
+          </div>
+        </div>
+          </div>
+        </div>
+
+        <div class="contact-form-wrap glass reveal" style="transition-delay:.1s">
+          <form class="contact-form" id="contactForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label" for="fname">Prénom</label>
+                <input class="form-input" id="fname" name="prenom" type="text" placeholder="" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="lname">Nom</label>
+                <input class="form-input" id="lname" name="nom" type="text" placeholder="" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="email">Email</label>
+              <input class="form-input" id="email" name="email" type="email" placeholder="" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="subject">Objet</label>
+              <input class="form-input" id="subject" name="objet" type="text" placeholder="" />
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="message">Message</label>
+              <textarea class="form-textarea" id="message" name="message" placeholder="" required></textarea>
+            <input type="hidden" name="access_key" value="3d1e66c6-96a0-4ff3-87ee-7105dd14a56c" />
+            <input type="hidden" name="subject" value="Nouveau message depuis le portfolio de Malik Bessabis" />
+            <input type="hidden" name="from_name" value="Portfolio Malik Bessabis" />
+            <input type="checkbox" name="botcheck" class="hidden" style="display:none;" tabindex="-1" autocomplete="off" />
+            </div>
+            <button class="btn btn-primary form-submit" type="submit">Envoyer le message</button>
+            <div class="form-success" id="formSuccess">Message envoyé. Je vous répondrai dès que possible.</div>
+            <div class="form-success" id="formError" style="display:none; background: rgba(251,113,133,.10); border-color: rgba(251,113,133,.25); color: #ffd0d8;">Impossible d'envoyer le message pour le moment. Réessayez plus tard.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2025–2026 · Malik Bessabis · Portfolio Data Science
+  </footer>
+
+  <script>
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    document.querySelectorAll('.reveal').forEach((element) => revealObserver.observe(element));
+
+    const skillsObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const bar = entry.target;
+          bar.style.width = bar.dataset.width;
+          skillsObserver.unobserve(bar);
+        }
+      });
+    }, { threshold: 0.45 });
+
+    document.querySelectorAll('.skill-fill').forEach((bar) => skillsObserver.observe(bar));
+
+    async function submitForm(event) {
+      event.preventDefault();
+
+      const form = event.currentTarget;
+      const submitButton = form.querySelector('.form-submit');
+      const successMessage = document.getElementById('formSuccess');
+      const errorMessage = document.getElementById('formError');
+
+      const requiredFields = [
+        document.getElementById('fname'),
+        document.getElementById('email'),
+        document.getElementById('message')
+      ];
+
+      let isValid = true;
+
+      requiredFields.forEach((field) => {
+        const empty = !field.value.trim();
+        field.style.borderColor = empty ? 'rgba(251, 113, 133, .65)' : 'rgba(148,163,184,.14)';
+        if (empty) isValid = false;
+      });
+
+      if (!isValid) return;
+
+      successMessage.style.display = 'none';
+      errorMessage.style.display = 'none';
+      submitButton.disabled = true;
+      submitButton.textContent = 'Envoi en cours...';
+
+      try {
+        const formData = new FormData(form);
+
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          successMessage.style.display = 'block';
+          form.reset();
+        } else {
+          errorMessage.style.display = 'block';
+          console.error(result);
+        }
+      } catch (error) {
+        errorMessage.style.display = 'block';
+        console.error(error);
+      } finally {
+        submitButton.disabled = false;
+        submitButton.textContent = 'Envoyer le message';
+      }
+    }
+
+    document.getElementById('contactForm').addEventListener('submit', submitForm);
+  </script>
+</body>
+</html>
